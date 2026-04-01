@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
-import { useAuth } from '../context/AuthContext';
 import { generateFlashCards } from '../services/flashcardService';
 import TopicSelector from '../components/topic/TopicSelector';
 
 export default function HomePage() {
   const { setTopic, setCards, resetSession } = useSession();
-  const { user, logout } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -28,26 +26,8 @@ export default function HomePage() {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center px-4 py-16">
-      {/* Top bar */}
-      <div className="fixed top-0 right-0 left-0 flex justify-between items-center px-6 py-4 bg-gray-950/80 backdrop-blur-sm border-b border-white/5 z-10">
-        <span className="text-white font-semibold text-sm flex items-center gap-2">🧠 Gamify Learn</span>
-        <div className="flex items-center gap-3">
-          <span className="text-gray-400 text-sm">👤 {user?.username}</span>
-          <button
-            onClick={handleLogout}
-            className="text-sm bg-white/5 hover:bg-rose-600/20 border border-white/10 hover:border-rose-500/40 text-gray-300 hover:text-rose-300 px-4 py-1.5 rounded-lg transition-all"
-          >
-            Sign Out
-          </button>
-        </div>
-      </div>
       {/* Hero */}
       <div className="text-center mb-10 space-y-3">
         <div className="text-6xl">🎮</div>
@@ -83,4 +63,3 @@ export default function HomePage() {
     </div>
   );
 }
-
